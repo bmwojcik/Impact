@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Impact_Campaign::menu"
+             title="Impact"
+             resource="Impact_Campaign::management"
+             parent="Magento_Backend::content"
+             module="Impact_Campaign"
+             sortOrder="100"
+        />
+        <add id="Impact_Campaign::management"
+             title="Campaign Management"
+             module="Impact_Campaign"
+             sortOrder="0"
+             action="campaign/campaign/index"
+             resource="Impact_Campaign::management"
+             parent="Impact_Campaign::menu"
+        />
+    </menu>
+</config>

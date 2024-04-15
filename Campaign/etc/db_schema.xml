@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="impact_campaign" resource="default" engine="innodb" comment="Campaign">
+        <column xsi:type="int" name="campaign_id" padding="10" unsigned="true" nullable="false" identity="true"
+                comment="Campaign Id Column"/>
+        <column xsi:type="int" name="status" padding="10" unsigned="true" nullable="false" identity="false"
+                comment="Status Column"/>
+        <column xsi:type="varchar" name="title" nullable="false" length="255" comment="Title Column"/>
+        <column xsi:type="varchar" name="description" nullable="false" length="255" comment="Description Column"/>
+        <column xsi:type="varchar" name="url" nullable="false" length="255" comment="Url Column"/>
+        <column xsi:type="varchar" name="products" nullable="false" length="255" comment="Products Column"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="campaign_id"/>
+        </constraint>
+        <index referenceId="IMPACT_CAMPAIGN_CAMPAIGN_ID" indexType="btree">
+            <column name="campaign_id"/>
+        </index>
+    </table>
+</schema>

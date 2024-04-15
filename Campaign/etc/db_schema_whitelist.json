@@ -1,0 +1,18 @@
+{
+    "impact_campaign": {
+        "column": {
+            "campaign_id": true,
+            "status": true,
+            "title": true,
+            "description": true,
+            "url": true,
+            "products": true
+        },
+        "index": {
+            "IMPACT_CAMPAIGN_CAMPAIGN_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    }
+}

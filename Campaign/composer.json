@@ -1,0 +1,21 @@
+{
+  "name": "impact/module-campaign",
+  "version": "1.0.0",
+  "description": "This module is responsible for Campaigns configuration",
+  "type": "magento2-module",
+  "require": {
+    "magento/framework": "*",
+    "magento/module-admin-analytics": "100.4.*"
+  },
+  "license": [
+    "Proprietary"
+  ],
+  "autoload": {
+    "files": [
+      "registration.php"
+    ],
+    "psr-4": {
+      "Impact\\Campaign\\": ""
+    }
+  }
+}

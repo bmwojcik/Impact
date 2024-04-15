@@ -1,0 +1,190 @@
+<?xml version="1.0"?>
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">campaign_form.campaign_form_data_source</item>
+        </item>
+        <item name="label" xsi:type="string" translate="true">Campaign Form</item>
+        <item name="template" xsi:type="string">templates/form/collapsible</item>
+    </argument>
+    <settings>
+        <namespace>campaign_form</namespace>
+        <dataScope>data.general</dataScope>
+        <deps>
+            <dep>campaign_form.campaign_form_data_source</dep>
+        </deps>
+        <buttons>
+            <button name="save" class="Impact\Campaign\Block\Form\Campaign\Save"/>
+            <button name="back" class="Impact\Campaign\Block\Form\Campaign\Back"/>
+            <button name="delete" class="Impact\Campaign\Block\Form\Campaign\Delete"/>
+        </buttons>
+    </settings>
+    <dataSource name="campaign_form_data_source" component="Magento_Ui/js/form/provider">
+        <settings>
+            <submitUrl path="campaign/campaign/save"/>
+        </settings>
+        <dataProvider class="Impact\Campaign\Ui\DataProvider\CampaignDataProvider" name="campaign_form_data_source">
+            <settings>
+                <requestFieldName>campaign_id</requestFieldName>
+                <primaryFieldName>campaign_id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+    <fieldset name="general" sortOrder="10">
+        <settings>
+            <label translate="true">General</label>
+        </settings>
+        <field name="campaign_id" sortOrder="0" formElement="hidden">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">campaign_id</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Entity ID</label>
+                <dataScope>campaign_id</dataScope>
+            </settings>
+        </field>
+        <field name="title" sortOrder="10" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">title</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>string</dataType>
+                <label translate="true">Title</label>
+                <dataScope>title</dataScope>
+            </settings>
+        </field>
+        <field name="description" sortOrder="20" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">description</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>string</dataType>
+                <label translate="true">Description</label>
+                <dataScope>description</dataScope>
+            </settings>
+        </field>
+        <field name="url" sortOrder="30" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">url</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>string</dataType>
+                <label translate="true">Url</label>
+                <dataScope>url</dataScope>
+            </settings>
+        </field>
+<!--        <field name="sort_order" sortOrder="40" formElement="input">-->
+<!--            <argument name="data" xsi:type="array">-->
+<!--                <item name="config" xsi:type="array">-->
+<!--                    <item name="source" xsi:type="string">sort_order</item>-->
+<!--                </item>-->
+<!--            </argument>-->
+<!--            <settings>-->
+<!--                <dataType>string</dataType>-->
+<!--                <label translate="true">Sort Order</label>-->
+<!--                <dataScope>sort_order</dataScope>-->
+<!--            </settings>-->
+<!--        </field>-->
+
+        <field name="status">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Impact\Campaign\Ui\Component\Form\Field\Status</item>
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">50</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Status</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="source" xsi:type="string">status</item>
+                    <item name="dataScope" xsi:type="string">status</item>
+                    <item name="default" xsi:type="string">1</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+
+<!--        <field name="products" component="Magento_Ui/js/form/element/ui-select" sortOrder="60" formElement="select">-->
+<!--            <argument name="data" xsi:type="array">-->
+<!--                <item name="config" xsi:type="array">-->
+<!--                    <item name="filterOptions" xsi:type="boolean">true</item>-->
+<!--                    <item name="multiple" xsi:type="boolean">true</item>-->
+<!--                    <item name="showCheckbox" xsi:type="boolean">true</item>-->
+<!--                    <item name="disableLabel" xsi:type="boolean">true</item>-->
+<!--                    <item name="levelsVisibility" xsi:type="number">1</item>-->
+<!--                    <item name="searchOptions" xsi:type="boolean">true</item>-->
+<!--                    <item name="searchUrl" xsi:type="url" path="catalog/product/search"/>-->
+<!--                    <item name="filterPlaceholder" xsi:type="string" translate="true">Product Name or SKU</item>-->
+<!--                    <item name="emptyOptionsHtml" xsi:type="string" translate="true">Start typing to find products</item>-->
+<!--                    <item name="missingValuePlaceholder" xsi:type="string" translate="true">Product with ID: %s doesn\'t exist</item>-->
+<!--                </item>-->
+<!--            </argument>-->
+<!--            <settings>-->
+<!--                <required>false</required>-->
+<!--                <validation>-->
+<!--                    <rule name="required-entry" xsi:type="boolean">false</rule>-->
+<!--                </validation>-->
+<!--                <elementTmpl>ui/grid/filters/elements/ui-select</elementTmpl>-->
+<!--                <label translate="true">Products</label>-->
+<!--                <dataScope>products</dataScope>-->
+<!--                <componentType>field</componentType>-->
+<!--                <listens>-->
+<!--                    <link name="${ $.namespace }.${ $.namespace }:responseData">setParsed</link>-->
+<!--                </listens>-->
+<!--            </settings>-->
+<!--        </field>-->
+        <field name="products" component="Magento_Ui/js/form/element/ui-select" sortOrder="60" formElement="select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filterOptions" xsi:type="boolean">true</item>
+                    <item name="multiple" xsi:type="boolean">true</item>
+                    <item name="showCheckbox" xsi:type="boolean">true</item>
+                    <item name="disableLabel" xsi:type="boolean">true</item>
+                    <item name="levelsVisibility" xsi:type="number">1</item>
+                </item>
+            </argument>
+            <settings>
+                <required>false</required>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">false</rule>
+                </validation>
+                <elementTmpl>ui/grid/filters/elements/ui-select</elementTmpl>
+                <label translate="true">Products</label>
+                <dataScope>products</dataScope>
+                <componentType>field</componentType>
+                <listens>
+                    <link name="${ $.namespace }.${ $.namespace }:responseData">setParsed</link>
+                </listens>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="Impact\Campaign\Model\Source\Products"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+<!--        <field name="products" sortOrder="40" formElement="input">-->
+<!--            <argument name="data" xsi:type="array">-->
+<!--                <item name="config" xsi:type="array">-->
+<!--                    <item name="source" xsi:type="string">products</item>-->
+<!--                </item>-->
+<!--            </argument>-->
+<!--            <settings>-->
+<!--                <dataType>string</dataType>-->
+<!--                <label translate="true">Products</label>-->
+<!--                <dataScope>products</dataScope>-->
+<!--            </settings>-->
+<!--        </field>-->
+    </fieldset>
+</form>
