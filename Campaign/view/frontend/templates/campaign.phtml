@@ -4,11 +4,13 @@
 use Impact\Campaign\ViewModel\CampaignLabel;
 
 $viewModel = $block->getCampaignViewModel();
-$campaign = $viewModel->getCampaignLabel($block->getProduct());
+$campaignsData = $viewModel->getCampaignLabel($block->getProduct());
 ?>
 
-<?php if ($campaign): ?>
-<div class="campaign-label">
-    <span><?= $campaign ?></span>
-</div>
+<?php if (!empty($campaignsData)): ?>
+    <?php foreach ($campaignsData as $campaignData): ?>
+        <div class="campaign-label">
+            <span style="background-color:<?= $campaignData['color'] ?>;"><?= $campaignData['title'] ?></span>
+        </div>
+    <?php endforeach;?>
 <?php endif; ?>

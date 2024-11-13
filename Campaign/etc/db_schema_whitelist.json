@@ -14,5 +14,18 @@
         "constraint": {
             "PRIMARY": true
         }
+    },
+  "campaign_product": {
+    "column": {
+      "campaign_product_id": true,
+      "product_id": true,
+      "campaign_id": true
+    },
+    "index": {
+      "CAMPAIGN_PRODUCT_CAMPAIGN_PRODUCT_ID": true
+    },
+    "constraint": {
+      "PRIMARY": true
     }
+  }
 }

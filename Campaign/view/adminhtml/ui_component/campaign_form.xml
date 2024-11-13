@@ -59,42 +59,18 @@
                 <dataScope>title</dataScope>
             </settings>
         </field>
-        <field name="description" sortOrder="20" formElement="input">
+        <field name="color" sortOrder="20" formElement="input">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="source" xsi:type="string">description</item>
+                    <item name="source" xsi:type="string">color</item>
                 </item>
             </argument>
             <settings>
                 <dataType>string</dataType>
-                <label translate="true">Description</label>
-                <dataScope>description</dataScope>
+                <label translate="true">Color</label>
+                <dataScope>color</dataScope>
             </settings>
         </field>
-        <field name="url" sortOrder="30" formElement="input">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="source" xsi:type="string">url</item>
-                </item>
-            </argument>
-            <settings>
-                <dataType>string</dataType>
-                <label translate="true">Url</label>
-                <dataScope>url</dataScope>
-            </settings>
-        </field>
-<!--        <field name="sort_order" sortOrder="40" formElement="input">-->
-<!--            <argument name="data" xsi:type="array">-->
-<!--                <item name="config" xsi:type="array">-->
-<!--                    <item name="source" xsi:type="string">sort_order</item>-->
-<!--                </item>-->
-<!--            </argument>-->
-<!--            <settings>-->
-<!--                <dataType>string</dataType>-->
-<!--                <label translate="true">Sort Order</label>-->
-<!--                <dataScope>sort_order</dataScope>-->
-<!--            </settings>-->
-<!--        </field>-->
 
         <field name="status">
             <argument name="data" xsi:type="array">

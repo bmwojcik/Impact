@@ -78,47 +78,25 @@ class CampaignData extends DataObject implements CampaignInterface
     }
 
     /**
-     * Getter for Description.
+     * Getter for Color.
      *
      * @return string|null
      */
-    public function getDescription(): ?string
+    public function getColor(): ?string
     {
-        return $this->getData(self::DESCRIPTION);
+        return $this->getData(self::COLOR);
     }
 
     /**
-     * Setter for Description.
+     * Setter for Color.
      *
-     * @param string|null $description
+     * @param string|null $color
      *
      * @return void
      */
-    public function setDescription(?string $description): void
+    public function setColor(?string $color): void
     {
-        $this->setData(self::DESCRIPTION, $description);
-    }
-
-    /**
-     * Getter for Url.
-     *
-     * @return string|null
-     */
-    public function getUrl(): ?string
-    {
-        return $this->getData(self::URL);
-    }
-
-    /**
-     * Setter for Url.
-     *
-     * @param string|null $url
-     *
-     * @return void
-     */
-    public function setUrl(?string $url): void
-    {
-        $this->setData(self::URL, $url);
+        $this->setData(self::COLOR, $color);
     }
 
     /**

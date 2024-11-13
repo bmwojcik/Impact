@@ -2,7 +2,9 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
     <preference for="Impact\Campaign\Api\Data\CampaignInterface" type="Impact\Campaign\Model\Data\CampaignData"/>
+    <preference for="Impact\Campaign\Api\Data\CampaignProductInterface" type="Impact\Campaign\Model\Data\CampaignProductData"/>
     <preference for="Impact\Campaign\Api\Service\ProcessCampaignProductsInterface" type="Impact\Campaign\Service\ProcessCampaignProducts"/>
+    <preference for="Impact\Campaign\Api\Service\GetSerializedCampaignDataInterface" type="Impact\Campaign\Service\GetSerializedCampaignData"/>
 
     <virtualType name="Impact\Campaign\Logger\Handler\DebugHandler" type="Magento\Framework\Logger\Handler\Base">
         <arguments>
@@ -25,4 +27,6 @@
             <argument name="logger" xsi:type="object">Impact\Campaign\Logger\DebugLogger</argument>
         </arguments>
     </type>
+    <preference for="Impact\Campaign\Api\Data\CampaignProductInterface"
+                type="Impact\Campaign\Model\Data\CampaignProductData"/>
 </config>

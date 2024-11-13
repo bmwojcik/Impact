@@ -4,28 +4,25 @@ declare(strict_types=1);
 
 namespace Impact\Campaign\Service;
 
+use Impact\Campaign\Api\Data\CampaignProductInterface;
+use Impact\Campaign\Api\Data\CampaignProductInterfaceFactory;
 use Impact\Campaign\Api\Data\CampaignInterface;
 use Impact\Campaign\Api\Service\ProcessCampaignProductsInterface;
+use Impact\Campaign\Command\CampaignProduct\SaveCommand;
 use Impact\Campaign\Setup\Patch\Data\InstallCampaignAttribute;
 use Magento\Catalog\Api\ProductRepositoryInterface;
 use Monolog\Logger;
 
 class ProcessCampaignProducts implements ProcessCampaignProductsInterface
 {
-    private ProductRepositoryInterface $productRepository;
-    private Logger $logger;
-
-    /**
-     * @param ProductRepositoryInterface $productRepository
-     * @param Logger $logger
-     */
     public function __construct(
-        ProductRepositoryInterface $productRepository,
-        Logger $logger
-    ) {
-        $this->productRepository = $productRepository;
-        $this->logger = $logger;
+        private CampaignProductInterfaceFactory $campaignProductFactory,
+        private SaveCommand $camapignProductSave,
+        private Logger $logger
+    )
+    {
     }
+
 
     /**
      * @inheritDoc
@@ -34,9 +31,10 @@ class ProcessCampaignProducts implements ProcessCampaignProductsInterface
     {
         foreach ($campaign->getProducts() as $productId) {
             try {
-                $product = $this->productRepository->getById($productId);
-                $product->setCustomAttribute(InstallCampaignAttribute::ATTRIBUTE_CODE, $campaign->getCampaignId());
-                $this->productRepository->save($product);
+                $campaignProductEntity = $this->campaignProductFactory->create();
+                $campaignProductEntity->setCampaignId($campaign->getCampaignId());
+                $campaignProductEntity->setProductId((int)$productId);
+                $this->camapignProductSave->execute($campaignProductEntity);
                 $this->logger->debug(
                     sprintf('Product with id %s is now assigned to Campaign %s', $productId, $campaign->getCampaignId())
                 );

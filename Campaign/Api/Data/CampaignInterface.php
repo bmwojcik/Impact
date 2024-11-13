@@ -12,9 +12,9 @@ interface CampaignInterface
     public const CAMPAIGN_ID = "campaign_id";
     public const STATUS = "status";
     public const TITLE = "title";
-    public const DESCRIPTION = "description";
-    public const URL = "url";
     public const PRODUCTS = "products";
+
+    public const COLOR = "color";
 
     /**
      * Getter for CampaignId.
@@ -64,37 +64,22 @@ interface CampaignInterface
      */
     public function setTitle(?string $title): void;
 
+
     /**
-     * Getter for Description.
+     * Getter for Color.
      *
      * @return string|null
      */
-    public function getDescription(): ?string;
+    public function getColor(): ?string;
 
     /**
-     * Setter for Description.
+     * Setter for Color.
      *
-     * @param string|null $description
+     * @param string|null $color
      *
      * @return void
      */
-    public function setDescription(?string $description): void;
-
-    /**
-     * Getter for Url.
-     *
-     * @return string|null
-     */
-    public function getUrl(): ?string;
-
-    /**
-     * Setter for Url.
-     *
-     * @param string|null $url
-     *
-     * @return void
-     */
-    public function setUrl(?string $url): void;
+    public function setColor(?string $color): void;
 
     /**
      * Getter for Products.

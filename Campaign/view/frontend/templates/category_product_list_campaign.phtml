@@ -19,7 +19,6 @@ use Magento\Framework\App\Action\Action;
 $_productCollection = $block->getLoadedProductCollection();
 /** @var \Magento\Catalog\Helper\Output $_helper */
 $_helper = $block->getData('outputHelper');
-$viewModel = $block->getCampaignViewModel();
 ?>
 <?php if (!$_productCollection->count()): ?>
     <div class="message info empty">
@@ -53,10 +52,12 @@ $viewModel = $block->getCampaignViewModel();
                     <div class="product-item-info"
                          id="product-item-info_<?= /* @noEscape */ $_product->getId() ?>"
                          data-container="product-<?= /* @noEscape */ $viewMode ?>">
-                        <?php if ($campaign =  $viewModel->getCampaignLabel($_product)): ?>
+                        <?php if ($_product['campaign_data']): ?>
+                            <?php foreach (json_decode($_product['campaign_data'],true) as $campaignData): ?>
                             <div class="campaign-label">
-                                <span><?= $campaign ?></span>
+                                <span style="background-color:<?= $campaignData['color'] ?>;"><?= $campaignData['title'] ?></span>
                             </div>
+                            <?php endforeach;?>
                         <?php endif; ?>
                         <?php
                         $productImage = $block->getImage($_product, $imageDisplayArea);

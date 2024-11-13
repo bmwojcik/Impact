@@ -5,37 +5,46 @@ declare(strict_types=1);
 namespace Impact\Campaign\Test\Unit\Service;
 
 use Impact\Campaign\Api\Data\CampaignInterface;
-use Impact\Campaign\Setup\Patch\Data\InstallCampaignAttribute;
+use Impact\Campaign\Api\Data\CampaignProductInterface;
+use Impact\Campaign\Api\Data\CampaignProductInterfaceFactory;
+use Impact\Campaign\Command\CampaignProduct\SaveCommand;
+use Impact\Campaign\Service\ProcessCampaignProducts;
 use Magento\Framework\TestFramework\Unit\Helper\ObjectManager;
 use PHPUnit\Framework\TestCase;
-use Impact\Campaign\Service\ProcessCampaignProducts;
-use Magento\Catalog\Api\ProductRepositoryInterface;
-use Magento\Catalog\Api\Data\ProductInterface;
+use Monolog\Logger;
 
 class ProcessCampaignProductsTest extends TestCase
 {
-
     private $processCampaignProducts;
-    private $productRepositoryMock;
+    private $campaignProductFactoryMock;
+    private $saveCommandMock;
+    private $loggerMock;
     private $campaignMock;
-    private $productMock;
+    private $campaignProductMock;
 
     protected function setUp(): void
     {
         $objectManager = new ObjectManager($this);
 
-        $this->productRepositoryMock = $this->createMock(ProductRepositoryInterface::class);
+        $this->campaignProductFactoryMock = $this->createMock(CampaignProductInterfaceFactory::class);
+        $this->saveCommandMock = $this->createMock(SaveCommand::class);
+        $this->loggerMock = $this->createMock(Logger::class);
         $this->campaignMock = $this->createMock(CampaignInterface::class);
-        $this->productMock = $this->createMock(ProductInterface::class);
+        $this->campaignProductMock = $this->createMock(CampaignProductInterface::class);
+
+        $this->campaignProductFactoryMock->method('create')
+            ->willReturn($this->campaignProductMock);
 
         $this->processCampaignProducts = $objectManager->getObject(ProcessCampaignProducts::class, [
-            'productRepository' => $this->productRepositoryMock,
+            'campaignProductFactory' => $this->campaignProductFactoryMock,
+            'camapignProductSave' => $this->saveCommandMock,
+            'logger' => $this->loggerMock,
         ]);
     }
 
     public function testExecuteAssignsProductsToCampaignSuccessfully()
     {
-        $productIds = [1,2];
+        $productIds = [1, 2];
         $campaignId = 123;
 
         $this->campaignMock->expects($this->once())
@@ -45,16 +54,19 @@ class ProcessCampaignProductsTest extends TestCase
             ->method('getCampaignId')
             ->willReturn($campaignId);
 
-        $this->productRepositoryMock->method('getById')
-            ->willReturn($this->productMock);
+        $this->campaignProductMock->expects($this->exactly(2))
+            ->method('setCampaignId')
+            ->withConsecutive([$campaignId], [$campaignId]);
+        $this->campaignProductMock->expects($this->exactly(2))
+            ->method('setProductId')
+            ->withConsecutive([(int)$productIds[0]], [(int)$productIds[1]]);
 
-        $this->productMock->expects($this->exactly(2))
-            ->method('setCustomAttribute')
-            ->with(InstallCampaignAttribute::ATTRIBUTE_CODE, $campaignId);
+        $this->saveCommandMock->expects($this->exactly(2))
+            ->method('execute')
+            ->with($this->campaignProductMock);
 
-        $this->productRepositoryMock->expects($this->exactly(2))
-            ->method('save')
-            ->with($this->productMock);
+        $this->loggerMock->expects($this->exactly(2))
+            ->method('debug');
 
         $result = $this->processCampaignProducts->execute($this->campaignMock);
         $this->assertTrue($result);
@@ -72,15 +84,22 @@ class ProcessCampaignProductsTest extends TestCase
             ->method('getCampaignId')
             ->willReturn($campaignId);
 
+        $this->campaignProductMock->expects($this->once())
+            ->method('setCampaignId')
+            ->with($campaignId);
+        $this->campaignProductMock->expects($this->once())
+            ->method('setProductId')
+            ->with((int)$productIds[0]);
 
-        $this->productRepositoryMock->expects($this->once())
-            ->method('getById')
-            ->with($this->equalTo(1))
-            ->willThrowException(new \Magento\Framework\Exception\NoSuchEntityException(__('No such entity with id = 1')));
+        $this->saveCommandMock->expects($this->once())
+            ->method('execute')
+            ->with($this->campaignProductMock)
+            ->willThrowException(new \Exception('Error saving campaign product'));
+
+        $this->loggerMock->expects($this->once())
+            ->method('debug');
 
         $result = $this->processCampaignProducts->execute($this->campaignMock);
         $this->assertFalse($result);
     }
 }
-
-
